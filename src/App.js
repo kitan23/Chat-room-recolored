@@ -45,13 +45,17 @@ const SignOut = () => {
 
 const ChatRoom = () => {
   const [formValue, setFormValue] = useState("");
+
+  //FIND FOR THE CORRECT COLLECTION
   const messagesRef = firestore.collection("bros");
+
   //make a query to the database, order by the time create, and limit the number to 25
   const query = messagesRef.orderBy("createdAt").limitToLast(25);
+
   //listen to the database and react to changes
   const [messages] = useCollectionData(query, { idField: "id" });
-  console.log(messages);
   const dummy = useRef();
+  // console.log(messages);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -90,7 +94,6 @@ const ChatMessage = (props) => {
   //check if the message id is the same as the user id
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
   const user = firebase.auth().currentUser;
-  console.log(auth.currentUser.displayName);
   return (
     <div className={`message ${messageClass}`}>
       <img src={photoURL} />
